@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration | College Mess Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="auth-wrapper" style="padding: 40px 16px;">
+    <div class="auth-card" style="max-width: 620px;">
+      <div class="auth-header">
+        <a href="/" class="auth-logo">
+          <i class="fa-solid fa-user-plus"></i>
+        </a>
+        <h1 class="auth-title">Hostel Resident Registration</h1>
+        <p class="auth-subtitle">Enroll in college central mess dining and meal subscription</p>
+      </div>
+
+      <form id="register-form">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name *</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Priyanshu Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">College Email Address *</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@college.edu" required>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password (min 6 chars) *</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-role">Account Role *</label>
+            <select id="reg-role" class="form-select">
+              <option value="student" selected>Student Resident</option>
+              <option value="admin">Hostel Administration / Warden</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Hidden by default, toggled if Admin selected -->
+        <div id="admin-secret-group" class="form-group" style="display:none; background:#f0f9ff; padding:12px; border-radius:var(--radius-md); border:1px solid #bae6fd;">
+          <label class="form-label" for="reg-admin-secret" style="color:var(--primary-dark);">
+            <i class="fa-solid fa-key"></i> Admin Registration Secret Key
+          </label>
+          <input type="password" id="reg-admin-secret" class="form-control" placeholder="Enter administrative authorization key">
+          <div class="form-hint">Evaluator default key: <code>ADMIN_MESS_KEY_2026</code></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-roll">Roll / Enrollment No.</label>
+            <input type="text" id="reg-roll" class="form-control" placeholder="e.g. 24CS105">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-diet">Dietary Preference *</label>
+            <select id="reg-diet" class="form-select">
+              <option value="Veg" selected>Vegetarian (Veg)</option>
+              <option value="Non-Veg">Non-Vegetarian (Eggs & Chicken on special days)</option>
+              <option value="Special Jain">Special Jain (No Root Veg / Onion / Garlic)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-dept">Academic Department</label>
+            <select id="reg-dept" class="form-select">
+              <option value="Computer Science & Engineering" selected>Computer Science & Engineering</option>
+              <option value="Electronics & Communication">Electronics & Communication</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Artificial Intelligence & Data Science">AI & Data Science</option>
+              <option value="Electrical Engineering">Electrical Engineering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-hostel">Hostel Residence Block *</label>
+            <select id="reg-hostel" class="form-select">
+              <option value="Aryabhatta Hall (Block A)" selected>Aryabhatta Hall (Block A - Boys)</option>
+              <option value="Bhaskara Hall (Block B)">Bhaskara Hall (Block B - Boys)</option>
+              <option value="Gargi Hall (Block C)">Gargi Hall (Block C - Girls)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-room">Room Number</label>
+            <input type="text" id="reg-room" class="form-control" placeholder="e.g. A-204">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Default Subscription</label>
+            <input type="text" class="form-control" value="Standard All-Meals (₹4,200/mo)" disabled style="background:#f1f5f9;">
+          </div>
+        </div>
+
+        <button type="submit" id="register-submit-btn" class="btn btn-primary btn-block btn-lg" style="margin-top:12px;">
+          Complete Registration <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Already registered? <a href="/pages/login.html" style="font-weight:700;">Sign In here</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initRegisterPage();
+    });
+  </script>
+</body>
+</html>

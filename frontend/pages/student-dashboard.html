@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal | College Mess Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <div>
+          <div class="brand-title">CampusMess</div>
+          <div class="brand-subtitle">Student Portal</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-heading">My Dining</li>
+        <li class="menu-item">
+          <a href="/pages/student-dashboard.html" class="menu-link active">
+            <i class="fa-solid fa-house-chimney"></i> My Dashboard
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/pages/menu.html" class="menu-link">
+            <i class="fa-solid fa-calendar-week"></i> Weekly Mess Menu
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/pages/payments.html" class="menu-link">
+            <i class="fa-solid fa-receipt"></i> Payment History
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/pages/feedback.html" class="menu-link">
+            <i class="fa-solid fa-star-half-stroke"></i> Mess Feedback
+          </a>
+        </li>
+
+        <li class="menu-heading">Navigation</li>
+        <li class="menu-item">
+          <a href="/" class="menu-link">
+            <i class="fa-solid fa-globe"></i> Campus Home
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="user-avatar" id="sidebar-user-avatar">ST</div>
+          <div class="user-details">
+            <div class="user-name" id="sidebar-user-name">Student User</div>
+            <div class="user-role-badge" id="sidebar-user-role">Hostel Resident</div>
+          </div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="logout()" title="Sign Out">
+          <i class="fa-solid fa-power-off"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <main class="main-wrapper">
+      <!-- TOP NAVBAR -->
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button class="mobile-toggle" id="sidebar-toggle-btn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="page-title">My Dining Dashboard</h1>
+        </div>
+        <div class="nav-right">
+          <div class="date-pill" id="top-navbar-date">
+            <i class="fa-regular fa-calendar"></i> Today
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="openFeedbackModal()">
+            <i class="fa-solid fa-comment-dots"></i> Submit Feedback
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <div class="content-body">
+
+        <!-- 1. STUDENT PROFILE & ENROLLMENT / SUBSCRIPTION CARDS -->
+        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:24px; margin-bottom:30px;">
+          <!-- Profile Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-id-badge" style="color:var(--primary);"></i>
+                Hostel Resident Profile
+              </div>
+              <span class="badge badge-success">Verified Resident</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px;">
+              <div>
+                <small style="color:var(--text-muted); font-size:12px; text-transform:uppercase;">Student Name</small>
+                <div style="font-weight:700; font-size:16px; color:var(--navy-900);" id="profile-name">--</div>
+              </div>
+              <div>
+                <small style="color:var(--text-muted); font-size:12px; text-transform:uppercase;">Roll Number</small>
+                <div style="font-family:monospace; font-weight:700; font-size:15px;" id="profile-roll">--</div>
+              </div>
+              <div>
+                <small style="color:var(--text-muted); font-size:12px; text-transform:uppercase;">Hostel & Room</small>
+                <div style="font-weight:600; font-size:14px;" id="profile-hostel">--</div>
+              </div>
+              <div>
+                <small style="color:var(--text-muted); font-size:12px; text-transform:uppercase;">Department</small>
+                <div style="font-weight:600; font-size:14px;" id="profile-dept">--</div>
+              </div>
+              <div>
+                <small style="color:var(--text-muted); font-size:12px; text-transform:uppercase;">Dietary Preference</small>
+                <div><span class="badge badge-primary" id="profile-diet">Veg</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription & Fee Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-file-invoice-dollar" style="color:var(--teal);"></i>
+                Mess Subscription
+              </div>
+              <span id="sub-status-badge" class="badge badge-success">Active</span>
+            </div>
+            <div>
+              <div style="font-size:13px; color:var(--text-muted); margin-bottom:2px;">Plan: <strong id="sub-plan-name" style="color:var(--navy-800);">Standard All-Meals</strong></div>
+              <div style="font-size:1.8rem; font-weight:800; color:var(--navy-900); margin-bottom:6px;" id="sub-monthly-fee">₹4,200</div>
+              
+              <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0 10px;">
+                <span style="font-size:13px; font-weight:600;">Status for <span id="fee-current-month">Current Month</span>:</span>
+                <span id="fee-status-badge" class="badge badge-warning">Checking...</span>
+              </div>
+
+              <div id="fee-payment-meta" style="margin-bottom:12px;"></div>
+
+              <button id="btn-quick-pay-fee" class="btn btn-primary btn-block btn-sm" style="display:none;">
+                <i class="fa-solid fa-credit-card"></i> Pay Mess Fee (Demo)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. TODAY'S FOOD MENU HIGHLIGHT & ATTENDANCE CHECK-IN -->
+        <div class="card" style="margin-bottom:30px;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i class="fa-solid fa-utensils" style="color:var(--primary);"></i>
+                Today's Dining Schedule (<span id="today-day-label">Today</span>)
+              </div>
+              <div style="font-size:12.5px; color:var(--text-muted); margin-top:2px;">
+                Click "Check In" to record your meal consumption for real-time headcount.
+              </div>
+            </div>
+            <a href="/pages/menu.html" class="btn btn-secondary btn-sm">
+              <i class="fa-solid fa-calendar-days"></i> Full 7-Day Menu
+            </a>
+          </div>
+
+          <div class="meals-grid" id="today-meals-container">
+            <!-- Dynamically populated meal cards -->
+          </div>
+        </div>
+
+        <!-- 3. SPLIT ROW: OFFICIAL ANNOUNCEMENTS & RECENT FEEDBACK -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <!-- Announcements -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-bullhorn" style="color:var(--warning);"></i>
+                Recent Mess Notices
+              </div>
+            </div>
+            <div id="student-announcements-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- My Feedback History -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-comments" style="color:var(--teal);"></i>
+                My Mess Feedback
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="openFeedbackModal()">
+                <i class="fa-solid fa-plus"></i> Rate Food
+              </button>
+            </div>
+            <div id="student-feedbacks-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: DEMO FEE PAYMENT
+       ====================================================================== -->
+  <div id="payment-modal" class="modal-backdrop">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">Settle Monthly Mess Fee</div>
+        <button class="modal-close" onclick="hideModal('payment-modal')">&times;</button>
+      </div>
+      <form id="payment-form">
+        <div class="modal-body">
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:var(--radius-md); padding:16px; margin-bottom:18px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="color:var(--text-muted); font-size:13.5px;">Billing Month:</span>
+              <strong id="pay-modal-month" style="color:var(--navy-900);">--</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:var(--text-muted); font-size:13.5px;">Total Amount:</span>
+              <strong id="pay-modal-amount" style="font-size:1.4rem; color:var(--primary);">₹4,200</strong>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select id="pay-method" class="form-select">
+              <option value="UPI" selected>UPI (GPay / PhonePe / Paytm / QR)</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Net Banking">Net Banking</option>
+            </select>
+          </div>
+
+          <div class="form-hint" style="font-size:12px; color:var(--text-muted);">
+            <i class="fa-solid fa-info-circle"></i> This is a simulated student payment gateway for B.Tech project demonstration. Submitting will immediately generate a validated transaction ID and update your mess dues.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('payment-modal')">Cancel</button>
+          <button type="submit" id="btn-submit-payment" class="btn btn-primary">Confirm & Pay</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: SUBMIT FEEDBACK
+       ====================================================================== -->
+  <div id="feedback-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">Submit Dining Feedback</div>
+        <button class="modal-close" onclick="hideModal('feedback-modal')">&times;</button>
+      </div>
+      <form id="feedback-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Overall Experience Rating *</label>
+            <select id="fb-rating" class="form-select">
+              <option value="5">★★★★★ - Excellent (5/5)</option>
+              <option value="4" selected>★★★★☆ - Good (4/5)</option>
+              <option value="3">★★★☆☆ - Average (3/5)</option>
+              <option value="2">★★☆☆☆ - Needs Improvement (2/5)</option>
+              <option value="1">★☆☆☆☆ - Poor (1/5)</option>
+            </select>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="fb-category" class="form-select">
+                <option value="Food Quality" selected>Food Quality & Taste</option>
+                <option value="Cleanliness & Hygiene">Cleanliness & Hygiene</option>
+                <option value="Staff Behaviour">Staff Behaviour</option>
+                <option value="Timing & Punctuality">Timing & Punctuality</option>
+                <option value="Variety">Menu Variety</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Meal Slot</label>
+              <select id="fb-mealtype" class="form-select">
+                <option value="General" selected>General Experience</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="snacks">Evening Snacks</option>
+                <option value="dinner">Dinner</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Feedback / Suggestions *</label>
+            <textarea id="fb-comment" class="form-control" rows="4" placeholder="Detail your honest experience, remarks about spices, hygiene, or suggestions for the hostel mess committee..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('feedback-modal')">Cancel</button>
+          <button type="submit" class="btn btn-teal">Submit Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>
